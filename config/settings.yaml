@@ -1,0 +1,22 @@
+ecosystem: pypi
+window_months: 24
+
+sampling:
+  pypi_top_n: 200
+  min_stars: 100
+  min_prs_last_12m: 20
+
+outputs:
+  format: parquet  # parquet or csv
+  outdir: outputs/tables
+
+github:
+  api_base: https://api.github.com
+  per_page: 100
+
+osv:
+  api_base: https://api.osv.dev
+
+scorecard:
+  # We'll run OpenSSF Scorecard via GitHub Action + CLI
+  enabled: true
