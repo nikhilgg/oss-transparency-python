@@ -1,0 +1,88 @@
+name: Nightly Extract
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 18 * * *"   # 00:00 IST approx (UTC 18:30)
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN_PAT: ${{ secrets.GITHUB_TOKEN_PAT }}
+      PYPI_TOP_N: 200
+      WINDOW_MONTHS: 24
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ensure output dirs
+        run: |
+          mkdir -p outputs/tables outputs/logs outputs/scorecard
+
+      - name: Collect PyPI master
+        run: |
+          python -m src.pypi_collect
+
+      - name: Collect GitHub data
+        run: |
+          python -m src.github_collect
+
+      - name: Collect OSV data
+        run: |
+          python -m src.osv_collect
+
+      # Scorecard: optional, but powerful for governance index
+      - name: Install Scorecard
+        run: |
+          curl -L https://github.com/ossf/scorecard/releases/latest/download/scorecard_linux_amd64 -o scorecard
+          chmod +x scorecard
+          sudo mv scorecard /usr/local/bin/scorecard
+
+      - name: Run Scorecard for repos
+        run: |
+          python - << 'PY'
+          import pandas as pd, os, json, subprocess
+          outdir = "outputs/scorecard"
+          os.makedirs(outdir, exist_ok=True)
+          master = pd.read_parquet("outputs/tables/pypi_repo_master.parquet")
+          repos = []
+          for u in master["github_url"].dropna().unique():
+            parts = u.rstrip("/").split("/")
+            repos.append(f"https://github.com/{parts[-2]}/{parts[-1]}")
+          repos = list(dict.fromkeys(repos))[:100]  # cap for rate/time; increase later
+          for r in repos:
+            fp = os.path.join(outdir, r.split("/")[-2] + "_" + r.split("/")[-1] + ".json")
+            cmd = ["scorecard", "--repo", r, "--format", "json"]
+            try:
+              res = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=300)
+              with open(fp,"wb") as f:
+                f.write(res)
+            except Exception as e:
+              with open(fp,"w",encoding="utf-8") as f:
+                f.write(json.dumps({"repo": {"name": r}, "error": str(e)}))
+          PY
+
+      - name: Parse scorecard JSON
+        run: |
+          python -m src.scorecard_collect
+
+      - name: Build datasets
+        run: |
+          python -m src.build_datasets
+
+      - name: Upload outputs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-datasets
+          path: outputs/
