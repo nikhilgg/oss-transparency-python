@@ -1,0 +1,22 @@
+# Top PyPI packages - reduced set for feasible collection (20 packages)
+# Covers: web frameworks, data science, utilities, security, DevOps
+requests
+flask
+django
+fastapi
+pandas
+numpy
+scikit-learn
+pytest
+black
+pydantic
+celery
+redis
+cryptography
+pillow
+sqlalchemy
+httpx
+click
+rich
+tqdm
+beautifulsoup4

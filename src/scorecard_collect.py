@@ -18,7 +18,7 @@ def main():
         score = j.get("score")
         checks = j.get("checks") or []
         d = {
-            "repo_full_name": repo.replace("https://github.com/", ""),
+            "repo_full_name": repo.replace("https://github.com/", "").replace("github.com/", ""),
             "scorecard_score": score,
         }
         # store a few key checks as columns
