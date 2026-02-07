@@ -35,6 +35,10 @@ def write_df(df, outpath: str, fmt: str = "parquet") -> None:
 @retry(stop=stop_after_attempt(6), wait=wait_exponential(multiplier=1, min=1, max=60))
 def http_get(url: str, headers: Optional[Dict[str, str]] = None, params: Optional[Dict[str, Any]] = None) -> requests.Response:
     r = requests.get(url, headers=headers, params=params, timeout=60)
+    if r.status_code == 403:
+        retry_after = int(r.headers.get("Retry-After", 60))
+        time.sleep(retry_after)
+        raise RuntimeError(f"Retryable HTTP 403 (secondary rate limit): {url}")
     if r.status_code in (429, 500, 502, 503, 504):
         raise RuntimeError(f"Retryable HTTP {r.status_code}: {url}")
     r.raise_for_status()

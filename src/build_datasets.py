@@ -98,7 +98,7 @@ def main():
 
     # Dataset 4: repo-level bus factor + risk target placeholder (built after OSV processing)
     repo_level = repo_meta[["repo_full_name","stars","forks","language","created_at"]].merge(bus, on="repo_full_name", how="left")
-    repo_level = repo_level.merge(score[["repo_toggle: repo_full_name" if False else "repo_full_name","scorecard_score"]], on="repo_full_name", how="left")
+    repo_level = repo_level.merge(score[["repo_full_name","scorecard_score"]], on="repo_full_name", how="left")
     write_df(repo_level, f"{outdir}/dataset_repo_level_busfactor.{ 'csv' if fmt=='csv' else 'parquet'}", fmt=fmt)
 
     print("Datasets built: dataset_repo_month_panel, dataset_repo_level_busfactor")

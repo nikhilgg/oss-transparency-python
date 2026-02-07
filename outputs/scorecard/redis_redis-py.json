@@ -1,0 +1,237 @@
+{
+  "date": "2026-02-02",
+  "repo": {
+    "name": "github.com/redis/redis-py",
+    "commit": "65623b7fad9833b5281d6ce7f44f62f942621234"
+  },
+  "scorecard": {
+    "version": "v5.4.1-0.20260203203253-c363f9f58d40",
+    "commit": "c363f9f58d403b5c7d0012ebdc3af1032480755c"
+  },
+  "score": 6.8,
+  "checks": [
+    {
+      "name": "Maintained",
+      "score": 10,
+      "reason": "30 commit(s) and 11 issue activity found in the last 90 days -- score normalized to 10",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project is \"actively maintained\".",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#maintained"
+      }
+    },
+    {
+      "name": "Code-Review",
+      "score": 10,
+      "reason": "all changesets reviewed",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project requires human code review before pull requests (aka merge requests) are merged.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#code-review"
+      }
+    },
+    {
+      "name": "Dangerous-Workflow",
+      "score": 10,
+      "reason": "no dangerous workflow patterns detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project's GitHub Action workflows avoid dangerous patterns.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#dangerous-workflow"
+      }
+    },
+    {
+      "name": "CII-Best-Practices",
+      "score": 0,
+      "reason": "no effort to earn an OpenSSF best practices badge detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has an OpenSSF (formerly CII) Best Practices Badge.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#cii-best-practices"
+      }
+    },
+    {
+      "name": "Token-Permissions",
+      "score": 0,
+      "reason": "detected GitHub workflow tokens with excessive permissions",
+      "details": [
+        "Info: jobLevel 'actions' permission set to 'read': .github/workflows/codeql-analysis.yml:26",
+        "Info: jobLevel 'contents' permission set to 'read': .github/workflows/codeql-analysis.yml:27",
+        "Warn: jobLevel 'contents' permission set to 'write': .github/workflows/release-drafter.yml:14",
+        "Warn: no topLevel permission defined: .github/workflows/codeql-analysis.yml:1",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/docs.yaml:20",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/hiredis-py-integration.yaml:20",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/integration.yaml:24",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/pypi-publish.yaml:9",
+        "Info: found token with 'none' permissions: .github/workflows/release-drafter.yml:1",
+        "Warn: no topLevel permission defined: .github/workflows/spellcheck.yml:1",
+        "Warn: no topLevel permission defined: .github/workflows/stale-issues.yml:1"
+      ],
+      "documentation": {
+        "short": "Determines if the project's workflows follow the principle of least privilege.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#token-permissions"
+      }
+    },
+    {
+      "name": "Binary-Artifacts",
+      "score": 10,
+      "reason": "no binaries found in the repo",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has generated executable (binary) artifacts in the source repository.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#binary-artifacts"
+      }
+    },
+    {
+      "name": "Security-Policy",
+      "score": 0,
+      "reason": "security policy file not detected",
+      "details": [
+        "Warn: no security policy file detected",
+        "Warn: no security file to analyze",
+        "Warn: no security file to analyze",
+        "Warn: no security file to analyze"
+      ],
+      "documentation": {
+        "short": "Determines if the project has published a security policy.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#security-policy"
+      }
+    },
+    {
+      "name": "Pinned-Dependencies",
+      "score": 0,
+      "reason": "dependency not pinned by hash detected -- score normalized to 0",
+      "details": [
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/codeql-analysis.yml:39: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/codeql-analysis.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/codeql-analysis.yml:43: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/codeql-analysis.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/codeql-analysis.yml:54: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/codeql-analysis.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/codeql-analysis.yml:68: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/codeql-analysis.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/docs.yaml:28: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/docs.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/docs.yaml:29: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/docs.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/docs.yaml:43: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/docs.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/hiredis-py-integration.yaml:56: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/hiredis-py-integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:179: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:180: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:40: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: third-party GitHubAction not pinned by hash: .github/workflows/integration.yaml:41: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:87: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:111: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:161: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:198: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:199: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:51: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:52: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/integration.yaml:136: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/integration.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/pypi-publish.yaml:16: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/pypi-publish.yaml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/pypi-publish.yaml:18: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/pypi-publish.yaml/master?enable=pin",
+        "Warn: third-party GitHubAction not pinned by hash: .github/workflows/pypi-publish.yaml:31: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/pypi-publish.yaml/master?enable=pin",
+        "Warn: third-party GitHubAction not pinned by hash: .github/workflows/release-drafter.yml:19: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/release-drafter.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/spellcheck.yml:9: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/spellcheck.yml/master?enable=pin",
+        "Warn: third-party GitHubAction not pinned by hash: .github/workflows/spellcheck.yml:11: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/spellcheck.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/stale-issues.yml:23: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/stale-issues.yml/master?enable=pin",
+        "Warn: GitHub-owned GitHubAction not pinned by hash: .github/workflows/stale-issues.yml:67: update your workflow using https://app.stepsecurity.io/secureworkflow/redis/redis-py/stale-issues.yml/master?enable=pin",
+        "Warn: pipCommand not pinned by hash: .github/workflows/install_and_test.sh:22",
+        "Warn: pipCommand not pinned by hash: .github/workflows/install_and_test.sh:23",
+        "Warn: pipCommand not pinned by hash: .github/workflows/install_and_test.sh:41",
+        "Warn: pipCommand not pinned by hash: .github/workflows/docs.yaml:39",
+        "Warn: pipCommand not pinned by hash: .github/workflows/integration.yaml:58",
+        "Warn: pipCommand not pinned by hash: .github/workflows/integration.yaml:205",
+        "Warn: pipCommand not pinned by hash: .github/workflows/pypi-publish.yaml:22",
+        "Info:   0 out of  24 GitHub-owned GitHubAction dependencies pinned",
+        "Info:   0 out of   4 third-party GitHubAction dependencies pinned",
+        "Info:   0 out of   7 pipCommand dependencies pinned"
+      ],
+      "documentation": {
+        "short": "Determines if the project has declared and pinned the dependencies of its build process.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#pinned-dependencies"
+      }
+    },
+    {
+      "name": "License",
+      "score": 10,
+      "reason": "license file detected",
+      "details": [
+        "Info: project has a license file: LICENSE:0",
+        "Info: FSF or OSI recognized license: MIT License: LICENSE:0"
+      ],
+      "documentation": {
+        "short": "Determines if the project has defined a license.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#license"
+      }
+    },
+    {
+      "name": "Fuzzing",
+      "score": 10,
+      "reason": "project is fuzzed",
+      "details": [
+        "Info: OSSFuzz integration found"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses fuzzing.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#fuzzing"
+      }
+    },
+    {
+      "name": "Signed-Releases",
+      "score": -1,
+      "reason": "no releases found",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project cryptographically signs release artifacts.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#signed-releases"
+      }
+    },
+    {
+      "name": "Branch-Protection",
+      "score": -1,
+      "reason": "internal error: error during branchesHandler.setup: internal error: some github tokens can't read classic branch protection rules: https://github.com/ossf/scorecard-action/blob/main/docs/authentication/fine-grained-auth-token.md",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the default and release branches are protected with GitHub's branch protection settings.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#branch-protection"
+      }
+    },
+    {
+      "name": "Vulnerabilities",
+      "score": 4,
+      "reason": "6 existing vulnerabilities detected",
+      "details": [
+        "Warn: Project is vulnerable to: https://osv.dev/OSV-2021-955",
+        "Warn: Project is vulnerable to: https://osv.dev/PYSEC-2022-25",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-fm67-cv37-96ff",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-wpqr-jcpx-745r",
+        "Warn: Project is vulnerable to: https://osv.dev/PYSEC-2023-45",
+        "Warn: Project is vulnerable to: https://osv.dev/PYSEC-2023-46"
+      ],
+      "documentation": {
+        "short": "Determines if the project has open, known unfixed vulnerabilities.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#vulnerabilities"
+      }
+    },
+    {
+      "name": "Packaging",
+      "score": 10,
+      "reason": "packaging workflow detected",
+      "details": [
+        "Info: Project packages its releases by way of GitHub Actions.: .github/workflows/pypi-publish.yaml:13"
+      ],
+      "documentation": {
+        "short": "Determines if the project is published as a package that others can easily download, install, easily update, and uninstall.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#packaging"
+      }
+    },
+    {
+      "name": "SAST",
+      "score": 10,
+      "reason": "SAST tool is run on all commits",
+      "details": [
+        "Info: SAST configuration detected: CodeQL",
+        "Info: all commits (30) are checked with a SAST tool"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses static code analysis.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#sast"
+      }
+    }
+  ]
+}

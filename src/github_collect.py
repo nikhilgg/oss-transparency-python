@@ -1,4 +1,5 @@
 import os
+import time
 import pandas as pd
 from tqdm import tqdm
 from datetime import timedelta
@@ -48,53 +49,41 @@ def collect_repo_meta(repo: str) -> Dict[str, Any]:
     }
 
 def collect_pull_requests(repo: str, since_iso: str) -> pd.DataFrame:
-    # PR list endpoint includes PRs; we then fetch reviews for latency
+    # PR list endpoint — fetch only first page (100 most recent) to stay within rate limits
+    # Skip per-PR review fetches to avoid secondary rate limit; use merge latency instead
     url = f"https://api.github.com/repos/{repo}/pulls"
-    pulls = gh_paginate(url, {"state": "all", "sort": "updated", "direction": "desc", "per_page": 100})
+    r = http_get(url, headers=gh_headers(), params={"state": "all", "sort": "updated", "direction": "desc", "per_page": 100})
+    pulls = r.json() if isinstance(r.json(), list) else []
     rows = []
     for pr in pulls:
         created = pr.get("created_at")
         if created and created < since_iso:
-            # because sorted by updated, can't break safely; just skip older
-            pass
-        pr_number = pr["number"]
-        pr_created = pr.get("created_at")
-        pr_merged = pr.get("merged_at")
-        pr_closed = pr.get("closed_at")
-        # reviews
-        rev_url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}/reviews"
-        reviews = gh_paginate(rev_url, {"per_page": 100})
-        first_review_at = None
-        if reviews:
-            # earliest submitted_at
-            times = [rv.get("submitted_at") for rv in reviews if rv.get("submitted_at")]
-            if times:
-                first_review_at = sorted(times)[0]
+            continue
         rows.append({
             "repo_full_name": repo,
-            "pr_number": pr_number,
-            "pr_created_at": pr_created,
-            "pr_closed_at": pr_closed,
-            "pr_merged_at": pr_merged,
-            "first_review_at": first_review_at,
-            "review_count": len(reviews),
+            "pr_number": pr["number"],
+            "pr_created_at": pr.get("created_at"),
+            "pr_closed_at": pr.get("closed_at"),
+            "pr_merged_at": pr.get("merged_at"),
+            "first_review_at": None,
+            "review_count": 0,
             "author_association": pr.get("author_association"),
         })
     df = pd.DataFrame(rows)
-    # compute latency hours
     def hours(a, b):
         if not a or not b:
             return None
         return (parser.isoparse(b) - parser.isoparse(a)).total_seconds() / 3600.0
     if len(df):
-        df["latency_first_review_hours"] = df.apply(lambda r: hours(r["pr_created_at"], r["first_review_at"]), axis=1)
+        df["latency_first_review_hours"] = None
         df["latency_merge_hours"] = df.apply(lambda r: hours(r["pr_created_at"], r["pr_merged_at"]), axis=1)
     return df
 
 def collect_bug_issues(repo: str, since_iso: str) -> pd.DataFrame:
-    # Use search API to find issues with label:bug is heavy; use issues endpoint + filter labels
+    # Fetch first page of issues to stay within rate limits
     url = f"https://api.github.com/repos/{repo}/issues"
-    issues = gh_paginate(url, {"state": "all", "since": since_iso, "per_page": 100})
+    r = http_get(url, headers=gh_headers(), params={"state": "all", "since": since_iso, "per_page": 100})
+    issues = r.json() if isinstance(r.json(), list) else []
     rows = []
     for it in issues:
         if "pull_request" in it:
@@ -120,9 +109,10 @@ def collect_bug_issues(repo: str, since_iso: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 def collect_commit_contributors(repo: str) -> pd.DataFrame:
-    # contributor stats endpoint is cached + sometimes 202; fall back to /contributors
+    # Fetch first page of contributors to stay within rate limits
     url = f"https://api.github.com/repos/{repo}/contributors"
-    contributors = gh_paginate(url, {"anon": "true", "per_page": 100})
+    r = http_get(url, headers=gh_headers(), params={"anon": "true", "per_page": 100})
+    contributors = r.json() if isinstance(r.json(), list) else []
     rows = []
     for c in contributors:
         rows.append({

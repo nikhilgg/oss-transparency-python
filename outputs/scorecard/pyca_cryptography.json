@@ -1,0 +1,217 @@
+{
+  "date": "2026-02-02",
+  "repo": {
+    "name": "github.com/pyca/cryptography",
+    "commit": "4d46926c5b473f9cdcb86a4b1feb7b6c4777532b"
+  },
+  "scorecard": {
+    "version": "v5.4.1-0.20260203203253-c363f9f58d40",
+    "commit": "c363f9f58d403b5c7d0012ebdc3af1032480755c"
+  },
+  "score": 8,
+  "checks": [
+    {
+      "name": "Code-Review",
+      "score": 10,
+      "reason": "all changesets reviewed",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project requires human code review before pull requests (aka merge requests) are merged.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#code-review"
+      }
+    },
+    {
+      "name": "Security-Policy",
+      "score": 10,
+      "reason": "security policy file detected",
+      "details": [
+        "Info: security policy file detected: docs/security.rst:1",
+        "Info: Found linked content: docs/security.rst:1",
+        "Info: Found disclosure, vulnerability, and/or timelines in security policy: docs/security.rst:1",
+        "Info: Found text in security policy: docs/security.rst:1"
+      ],
+      "documentation": {
+        "short": "Determines if the project has published a security policy.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#security-policy"
+      }
+    },
+    {
+      "name": "Maintained",
+      "score": 10,
+      "reason": "30 commit(s) and 19 issue activity found in the last 90 days -- score normalized to 10",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project is \"actively maintained\".",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#maintained"
+      }
+    },
+    {
+      "name": "CII-Best-Practices",
+      "score": 0,
+      "reason": "no effort to earn an OpenSSF best practices badge detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has an OpenSSF (formerly CII) Best Practices Badge.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#cii-best-practices"
+      }
+    },
+    {
+      "name": "Dangerous-Workflow",
+      "score": 10,
+      "reason": "no dangerous workflow patterns detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project's GitHub Action workflows avoid dangerous patterns.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#dangerous-workflow"
+      }
+    },
+    {
+      "name": "License",
+      "score": 9,
+      "reason": "license file detected",
+      "details": [
+        "Info: project has a license file: LICENSE:0",
+        "Warn: project license file does not contain an FSF or OSI license."
+      ],
+      "documentation": {
+        "short": "Determines if the project has defined a license.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#license"
+      }
+    },
+    {
+      "name": "Branch-Protection",
+      "score": -1,
+      "reason": "internal error: error during branchesHandler.setup: internal error: some github tokens can't read classic branch protection rules: https://github.com/ossf/scorecard-action/blob/main/docs/authentication/fine-grained-auth-token.md",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the default and release branches are protected with GitHub's branch protection settings.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#branch-protection"
+      }
+    },
+    {
+      "name": "Signed-Releases",
+      "score": -1,
+      "reason": "no releases found",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project cryptographically signs release artifacts.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#signed-releases"
+      }
+    },
+    {
+      "name": "Token-Permissions",
+      "score": 9,
+      "reason": "detected GitHub workflow tokens with excessive permissions",
+      "details": [
+        "Warn: no topLevel permission defined: .github/workflows/auto-close-stale.yml:1",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/benchmark.yml:14",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/boring-open-awslc-bump.yml:3",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/ci.yml:10",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/downstream-version-bump.yml:3",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linkcheck.yml:12",
+        "Warn: no topLevel permission defined: .github/workflows/lock.yml:1",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/pypi-publish.yml:22",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/wheel-builder.yml:3",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/x509-limbo-version-bump.yml:3",
+        "Info: no jobLevel write permissions found"
+      ],
+      "documentation": {
+        "short": "Determines if the project's workflows follow the principle of least privilege.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#token-permissions"
+      }
+    },
+    {
+      "name": "Fuzzing",
+      "score": 10,
+      "reason": "project is fuzzed",
+      "details": [
+        "Info: OSSFuzz integration found"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses fuzzing.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#fuzzing"
+      }
+    },
+    {
+      "name": "Binary-Artifacts",
+      "score": 10,
+      "reason": "no binaries found in the repo",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has generated executable (binary) artifacts in the source repository.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#binary-artifacts"
+      }
+    },
+    {
+      "name": "Packaging",
+      "score": 10,
+      "reason": "packaging workflow detected",
+      "details": [
+        "Info: Project packages its releases by way of GitHub Actions.: .github/workflows/pypi-publish.yml:25"
+      ],
+      "documentation": {
+        "short": "Determines if the project is published as a package that others can easily download, install, easily update, and uninstall.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#packaging"
+      }
+    },
+    {
+      "name": "Vulnerabilities",
+      "score": 3,
+      "reason": "7 existing vulnerabilities detected",
+      "details": [
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-qmgc-5h2g-mvrw",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-w853-jp5j-5j7f",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-2xpw-w6gg-jr37",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-38jv-5279-wg99",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-48p4-8xcf-vxj5",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-gm62-xv2j-4w53",
+        "Warn: Project is vulnerable to: https://osv.dev/GHSA-pq67-6m6q-mj2v"
+      ],
+      "documentation": {
+        "short": "Determines if the project has open, known unfixed vulnerabilities.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#vulnerabilities"
+      }
+    },
+    {
+      "name": "Pinned-Dependencies",
+      "score": 6,
+      "reason": "dependency not pinned by hash detected -- score normalized to 6",
+      "details": [
+        "Warn: downloadThenRun not pinned by hash: .github/downstream.d/certbot-josepy.sh:6",
+        "Warn: pipCommand not pinned by hash: .github/downstream.d/sigstore-python.sh:10",
+        "Warn: pipCommand not pinned by hash: .github/workflows/benchmark.yml:50",
+        "Warn: pipCommand not pinned by hash: .github/workflows/benchmark.yml:54",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:262",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:313",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:378",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:497",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:545",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:133",
+        "Warn: pipCommand not pinned by hash: .github/workflows/ci.yml:199",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linkcheck.yml:39",
+        "Warn: pipCommand not pinned by hash: .github/workflows/wheel-builder.yml:42",
+        "Warn: pipCommand not pinned by hash: .github/workflows/wheel-builder.yml:372",
+        "Info:  40 out of  40 GitHub-owned GitHubAction dependencies pinned",
+        "Info:  17 out of  17 third-party GitHubAction dependencies pinned",
+        "Info:   0 out of  13 pipCommand dependencies pinned",
+        "Info:   0 out of   1 downloadThenRun dependencies pinned"
+      ],
+      "documentation": {
+        "short": "Determines if the project has declared and pinned the dependencies of its build process.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#pinned-dependencies"
+      }
+    },
+    {
+      "name": "SAST",
+      "score": 0,
+      "reason": "SAST tool is not run on all commits -- score normalized to 0",
+      "details": [
+        "Warn: 0 commits out of 30 are checked with a SAST tool"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses static code analysis.",
+        "url": "https://github.com/ossf/scorecard/blob/c363f9f58d403b5c7d0012ebdc3af1032480755c/docs/checks.md#sast"
+      }
+    }
+  ]
+}

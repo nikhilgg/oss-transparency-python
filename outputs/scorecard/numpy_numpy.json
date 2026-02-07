@@ -1,0 +1,343 @@
+{
+  "date": "2026-02-06T23:30:12Z",
+  "repo": {
+    "name": "github.com/numpy/numpy",
+    "commit": "0d7986494b39ace565afda3de68be528ddade602"
+  },
+  "scorecard": {
+    "version": "v5.3.0",
+    "commit": "c22063e786c11f9dd714d777a687ff7c4599b600"
+  },
+  "score": 7.2,
+  "checks": [
+    {
+      "name": "Dependency-Update-Tool",
+      "score": 10,
+      "reason": "update tool detected",
+      "details": [
+        "Info: detected update tool: Dependabot: .github/dependabot.yml:1"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses a dependency update tool.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#dependency-update-tool"
+      }
+    },
+    {
+      "name": "Maintained",
+      "score": 10,
+      "reason": "30 commit(s) and 27 issue activity found in the last 90 days -- score normalized to 10",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project is \"actively maintained\".",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#maintained"
+      }
+    },
+    {
+      "name": "Code-Review",
+      "score": 10,
+      "reason": "all changesets reviewed",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project requires human code review before pull requests (aka merge requests) are merged.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#code-review"
+      }
+    },
+    {
+      "name": "Packaging",
+      "score": -1,
+      "reason": "packaging workflow not detected",
+      "details": [
+        "Warn: no GitHub/GitLab publishing workflow detected."
+      ],
+      "documentation": {
+        "short": "Determines if the project is published as a package that others can easily download, install, easily update, and uninstall.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#packaging"
+      }
+    },
+    {
+      "name": "Dangerous-Workflow",
+      "score": 10,
+      "reason": "no dangerous workflow patterns detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project's GitHub Action workflows avoid dangerous patterns.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#dangerous-workflow"
+      }
+    },
+    {
+      "name": "Token-Permissions",
+      "score": 10,
+      "reason": "GitHub workflow tokens follow principle of least privilege",
+      "details": [
+        "Warn: jobLevel 'statuses' permission set to 'write': .github/workflows/circleci.yml:17",
+        "Info: jobLevel 'actions' permission set to 'read': .github/workflows/codeql.yml:31",
+        "Info: jobLevel 'contents' permission set to 'read': .github/workflows/codeql.yml:32",
+        "Info: jobLevel 'contents' permission set to 'read': .github/workflows/mypy_primer.yml:97",
+        "Info: topLevel permissions set to 'read-all': .github/workflows/circleci.yml:9",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/codeql.yml:24",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/compiler_sanitizers.yml:26",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/cygwin.yml:18",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/dependency-review.yml:11",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/emscripten.yml:15",
+        "Info: found token with 'none' permissions: .github/workflows/labeler.yml:1",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linux-ppc64le.yml:16",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linux.yml:32",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linux_blas.yml:58",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linux_qemu.yml:33",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/linux_simd.yml:52",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/macos.yml:15",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/mypy.yml:43",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/mypy_primer.yml:20",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/mypy_primer_comment.yml:11",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/pixi-packages.yml:14",
+        "Info: found token with 'none' permissions: .github/workflows/scorecards.yml:1",
+        "Info: topLevel permissions set to 'read-all': .github/workflows/stubtest.yml:2",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/wheels.yml:24",
+        "Info: topLevel 'contents' permission set to 'read': .github/workflows/windows.yml:19"
+      ],
+      "documentation": {
+        "short": "Determines if the project's workflows follow the principle of least privilege.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#token-permissions"
+      }
+    },
+    {
+      "name": "Binary-Artifacts",
+      "score": 10,
+      "reason": "no binaries found in the repo",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has generated executable (binary) artifacts in the source repository.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#binary-artifacts"
+      }
+    },
+    {
+      "name": "CII-Best-Practices",
+      "score": 0,
+      "reason": "no effort to earn an OpenSSF best practices badge detected",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project has an OpenSSF (formerly CII) Best Practices Badge.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#cii-best-practices"
+      }
+    },
+    {
+      "name": "Pinned-Dependencies",
+      "score": 3,
+      "reason": "dependency not pinned by hash detected -- score normalized to 3",
+      "details": [
+        "Info: Possibly incomplete results: error parsing job operating system: .github/workflows/mypy.yml:71",
+        "Info: Possibly incomplete results: error parsing job operating system: .github/workflows/mypy.yml:80",
+        "Info: Possibly incomplete results: error parsing job operating system: .github/workflows/mypy.yml:83",
+        "Info: Possibly incomplete results: error parsing job operating system: .github/workflows/mypy.yml:86",
+        "Warn: pipCommand not pinned by hash: tools/wheels/cibw_before_build.sh:35",
+        "Warn: pipCommand not pinned by hash: tools/wheels/cibw_before_build.sh:52",
+        "Warn: pipCommand not pinned by hash: .github/workflows/compiler_sanitizers.yml:65",
+        "Warn: pipCommand not pinned by hash: .github/workflows/compiler_sanitizers.yml:66",
+        "Warn: pipCommand not pinned by hash: .github/workflows/compiler_sanitizers.yml:67",
+        "Warn: pipCommand not pinned by hash: .github/workflows/compiler_sanitizers.yml:100",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux-ppc64le.yml:51",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux-ppc64le.yml:52",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:52",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:321",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:322",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:323",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:326",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:358",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:359",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:360",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:100",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:101",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:104",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:147",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:148",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:154",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:162",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:234",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:272",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:279",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:284",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:293",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:411",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:412",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:413",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux.yml:417",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:139",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:235",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:362",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:363",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:399",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:400",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:84",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:87",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:89",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:174",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:207",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:268",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:278",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:298",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:299",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_blas.yml:300",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_simd.yml:136",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_simd.yml:206",
+        "Warn: pipCommand not pinned by hash: .github/workflows/linux_simd.yml:256",
+        "Warn: pipCommand not pinned by hash: .github/workflows/macos.yml:137",
+        "Warn: pipCommand not pinned by hash: .github/workflows/macos.yml:157",
+        "Warn: pipCommand not pinned by hash: .github/workflows/mypy_primer.yml:40",
+        "Info:  90 out of  90 GitHub-owned GitHubAction dependencies pinned",
+        "Info:  15 out of  15 third-party GitHubAction dependencies pinned",
+        "Info:   1 out of  55 pipCommand dependencies pinned"
+      ],
+      "documentation": {
+        "short": "Determines if the project has declared and pinned the dependencies of its build process.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#pinned-dependencies"
+      }
+    },
+    {
+      "name": "Vulnerabilities",
+      "score": 0,
+      "reason": "24 existing vulnerabilities detected",
+      "details": [
+        "Warn: Project is vulnerable to: PYSEC-2024-4 / GHSA-2mqj-m65w-jghx",
+        "Warn: Project is vulnerable to: PYSEC-2023-165 / GHSA-cwvm-v4w8-q58c",
+        "Warn: Project is vulnerable to: PYSEC-2023-137 / GHSA-pr76-5cm5-w9cj",
+        "Warn: Project is vulnerable to: PYSEC-2023-161 / GHSA-wfm5-v35h-vwf4",
+        "Warn: Project is vulnerable to: GHSA-29gw-9793-fvw7",
+        "Warn: Project is vulnerable to: PYSEC-2015-24 / GHSA-4vwq-x64q-j4cj",
+        "Warn: Project is vulnerable to: PYSEC-2017-46 / GHSA-66gw-5xpf-gfp5",
+        "Warn: Project is vulnerable to: PYSEC-2015-25 / GHSA-92mr-v722-f48m",
+        "Warn: Project is vulnerable to: PYSEC-2022-12 / GHSA-pq7m-3gw7-gq5x",
+        "Warn: Project is vulnerable to: PYSEC-2017-47",
+        "Warn: Project is vulnerable to: PYSEC-2020-73",
+        "Warn: Project is vulnerable to: PYSEC-2019-156 / GHSA-xp76-357g-9wqq",
+        "Warn: Project is vulnerable to: PYSEC-2023-102",
+        "Warn: Project is vulnerable to: PYSEC-2023-114",
+        "Warn: Project is vulnerable to: GHSA-34jh-p97f-mpxf",
+        "Warn: Project is vulnerable to: PYSEC-2023-212 / GHSA-g4mx-q9vg-27p4",
+        "Warn: Project is vulnerable to: PYSEC-2023-207 / GHSA-gwvm-45gx-3cf8",
+        "Warn: Project is vulnerable to: PYSEC-2019-133 / GHSA-mh33-7rrq-662w",
+        "Warn: Project is vulnerable to: GHSA-pq67-6m6q-mj2v",
+        "Warn: Project is vulnerable to: PYSEC-2019-132 / GHSA-r64q-w8jr-g9qp",
+        "Warn: Project is vulnerable to: PYSEC-2023-192 / GHSA-v845-jxx5-vc9f",
+        "Warn: Project is vulnerable to: PYSEC-2020-148 / GHSA-wqvq-5m8c-6g24",
+        "Warn: Project is vulnerable to: PYSEC-2018-32 / GHSA-www2-v7xj-xrc6",
+        "Warn: Project is vulnerable to: PYSEC-2021-108"
+      ],
+      "documentation": {
+        "short": "Determines if the project has open, known unfixed vulnerabilities.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#vulnerabilities"
+      }
+    },
+    {
+      "name": "SAST",
+      "score": 9,
+      "reason": "SAST tool detected but not run on all commits",
+      "details": [
+        "Info: SAST configuration detected: CodeQL",
+        "Warn: 25 commits out of 30 are checked with a SAST tool"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses static code analysis.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#sast"
+      }
+    },
+    {
+      "name": "License",
+      "score": 9,
+      "reason": "license file detected",
+      "details": [
+        "Info: project has a license file: LICENSE.txt:0",
+        "Warn: project license file does not contain an FSF or OSI license."
+      ],
+      "documentation": {
+        "short": "Determines if the project has defined a license.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#license"
+      }
+    },
+    {
+      "name": "Fuzzing",
+      "score": 10,
+      "reason": "project is fuzzed",
+      "details": [
+        "Info: OSSFuzz integration found"
+      ],
+      "documentation": {
+        "short": "Determines if the project uses fuzzing.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#fuzzing"
+      }
+    },
+    {
+      "name": "Signed-Releases",
+      "score": 0,
+      "reason": "Project has not signed or included provenance with any releases.",
+      "details": [
+        "Warn: release artifact v2.4.2 not signed: https://api.github.com/repos/numpy/numpy/releases/281935586",
+        "Warn: release artifact v2.4.1 not signed: https://api.github.com/repos/numpy/numpy/releases/275735087",
+        "Warn: release artifact v2.4.0 not signed: https://api.github.com/repos/numpy/numpy/releases/271961927",
+        "Warn: release artifact v2.4.0rc1 not signed: https://api.github.com/repos/numpy/numpy/releases/267141255",
+        "Warn: release artifact v2.3.5 not signed: https://api.github.com/repos/numpy/numpy/releases/262811027",
+        "Warn: release artifact v2.4.2 does not have provenance: https://api.github.com/repos/numpy/numpy/releases/281935586",
+        "Warn: release artifact v2.4.1 does not have provenance: https://api.github.com/repos/numpy/numpy/releases/275735087",
+        "Warn: release artifact v2.4.0 does not have provenance: https://api.github.com/repos/numpy/numpy/releases/271961927",
+        "Warn: release artifact v2.4.0rc1 does not have provenance: https://api.github.com/repos/numpy/numpy/releases/267141255",
+        "Warn: release artifact v2.3.5 does not have provenance: https://api.github.com/repos/numpy/numpy/releases/262811027"
+      ],
+      "documentation": {
+        "short": "Determines if the project cryptographically signs release artifacts.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#signed-releases"
+      }
+    },
+    {
+      "name": "Branch-Protection",
+      "score": 3,
+      "reason": "branch protection is not maximal on development and all release branches",
+      "details": [
+        "Info: 'allow deletion' disabled on branch 'main'",
+        "Info: 'force pushes' disabled on branch 'main'",
+        "Warn: branch 'main' does not require approvers",
+        "Warn: codeowners review is not required on branch 'main'",
+        "Warn: no status checks found to merge onto branch 'main'"
+      ],
+      "documentation": {
+        "short": "Determines if the default and release branches are protected with GitHub's branch protection settings.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#branch-protection"
+      }
+    },
+    {
+      "name": "Security-Policy",
+      "score": 9,
+      "reason": "security policy file detected",
+      "details": [
+        "Info: security policy file detected: github.com/numpy/.github/SECURITY.md:1",
+        "Info: Found linked content: github.com/numpy/.github/SECURITY.md:1",
+        "Warn: One or no descriptive hints of disclosure, vulnerability, and/or timelines in security policy",
+        "Info: Found text in security policy: github.com/numpy/.github/SECURITY.md:1"
+      ],
+      "documentation": {
+        "short": "Determines if the project has published a security policy.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#security-policy"
+      }
+    },
+    {
+      "name": "CI-Tests",
+      "score": 10,
+      "reason": "20 out of 20 merged PRs checked by a CI test -- score normalized to 10",
+      "details": null,
+      "documentation": {
+        "short": "Determines if the project runs tests before pull requests are merged.",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#ci-tests"
+      }
+    },
+    {
+      "name": "Contributors",
+      "score": 10,
+      "reason": "project has 100 contributing companies or organizations",
+      "details": [
+        "Info: found contributions from: BootBootBoot, CTPUG, Cecam-ML4MS, FranceIX, HPQC-LABS, IRHPC, NNairIITK, NixOS, PixN-ROM, PyWavelets, Quansight, Quansight-Labs, ReScience, SOCI, Technobotts, ThinkboxSoftware, Tribler, airspeed-velocity, amazon jp, aws thinkbox, blaze, carpentrycon, cea, cocotb, conda-forge, cupy, cveda, cykdtree, d-SEAMS, data-apis, datacarpentry, dgFemtoLab, drdoctr, enthought, epython-dev, ergs, ex-intel, finch-tensor, google, google-deepmind, graphxd, hpc-carpentry, iitkAWG, imagen2, kymata-atlas, lab-cosmo, leanprover-community, lego-line, libdynd, malariamuseum, metatensor, mingwpy, mit, neurospin, numfocus, numpy, nvidia, ohbm, openjournals, openteams, planet-sympy, pydata, pyflyby, pygae, pypa, pypackaging-native, pypy, python-compilers-workshop, python-hyper, python-trio, python3statement, quansight, quansight labs, quansight openteams, rerpy, retired, rlink7, ropensci, scientific-python, scikit-image, scikit-learn, scikits, scipy, scipy-conference, scipy-lectures, seldon-code, skrub-wreckers, spack, statistical-python, statsmodels, swcarpentry, symengine, sympy, systemetric, tensorly, theochemui @lab-cosmo @metatensor, university of california berkeley, university of toronto, vls-lab, xnd-project"
+      ],
+      "documentation": {
+        "short": "Determines if the project has a set of contributors from multiple organizations (e.g., companies).",
+        "url": "https://github.com/ossf/scorecard/blob/c22063e786c11f9dd714d777a687ff7c4599b600/docs/checks.md#contributors"
+      }
+    }
+  ]
+}
