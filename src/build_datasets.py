@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 import numpy as np
 from dateutil import parser
@@ -7,6 +8,37 @@ from src.common import load_settings, write_df, ensure_dir
 def month_bucket(ts: str) -> str:
     dt = parser.isoparse(ts)
     return f"{dt.year:04d}-{dt.month:02d}"
+
+def quarter_bucket(ts: str) -> str:
+    dt = parser.isoparse(ts)
+    q = (dt.month - 1) // 3 + 1
+    return f"{dt.year:04d}-Q{q}"
+
+def parse_cvss_severity(cvss_str: str) -> str:
+    """Classify CVSS vector string into critical/high/medium/low."""
+    if not cvss_str or pd.isna(cvss_str):
+        return "unknown"
+    # Try to extract base score from CVSS 3.x or 4.0 vector
+    # For CVSS 3.x, we approximate from the vector components
+    # AV:N = network (higher), AC:L = low complexity (higher), PR:N = no privs (higher)
+    s = str(cvss_str).upper()
+    # Simple heuristic based on attack vector + privileges + scope
+    score = 0
+    if "AV:N" in s: score += 3
+    elif "AV:A" in s: score += 2
+    elif "AV:L" in s: score += 1
+    if "AC:L" in s: score += 1.5
+    if "PR:N" in s: score += 2
+    elif "PR:L" in s: score += 1
+    if "UI:N" in s: score += 1
+    if "S:C" in s or "SC:H" in s or "SC:L" in s: score += 1
+    # Confidentiality/Integrity/Availability impact
+    for impact in ["C:H", "I:H", "A:H", "VC:H", "VI:H", "VA:H"]:
+        if impact in s: score += 1
+    if score >= 8: return "critical"
+    elif score >= 6: return "high"
+    elif score >= 3: return "medium"
+    else: return "low"
 
 def gini(x: np.ndarray) -> float:
     x = x[x >= 0]
@@ -137,22 +169,121 @@ def main():
     panel = panel.merge(gov_merge[["repo_full_name", "governance_index"]], on="repo_full_name", how="left")
     panel = panel.merge(ext_df[["repo_full_name", "external_contributor_ratio"]], on="repo_full_name", how="left")
 
-    # transparency score: start simple; can improve later with contributor/PR diversity measures
-    # Here: many eyes proxy = pr_count (monthly) (normalize later)
+    # --- Composite transparency index (normalized) ---
+    # Compute per-repo totals for normalization
+    repo_pr_total = prs.groupby("repo_full_name")["pr_number"].count().rename("total_prs_repo")
+    repo_contrib_count = contrib.groupby("repo_full_name")["contributor_login"].nunique().rename("contributor_count")
+    transparency_df = pd.DataFrame({"repo_full_name": valid_repos}).merge(
+        repo_pr_total, on="repo_full_name", how="left"
+    ).merge(
+        repo_contrib_count, on="repo_full_name", how="left"
+    ).merge(
+        ext_df[["repo_full_name", "external_contributor_ratio"]], on="repo_full_name", how="left"
+    )
+    transparency_df["total_prs_repo"] = transparency_df["total_prs_repo"].fillna(0)
+    transparency_df["contributor_count"] = transparency_df["contributor_count"].fillna(0)
+    transparency_df["external_contributor_ratio"] = transparency_df["external_contributor_ratio"].fillna(0)
+
+    # Min-max normalize each component to [0,1] then average
+    for col in ["total_prs_repo", "contributor_count", "external_contributor_ratio"]:
+        cmin, cmax = transparency_df[col].min(), transparency_df[col].max()
+        if cmax > cmin:
+            transparency_df[f"{col}_norm"] = (transparency_df[col] - cmin) / (cmax - cmin)
+        else:
+            transparency_df[f"{col}_norm"] = 0.0
+
+    transparency_df["transparency_index"] = (
+        transparency_df["total_prs_repo_norm"] +
+        transparency_df["contributor_count_norm"] +
+        transparency_df["external_contributor_ratio_norm"]
+    ) / 3.0
+
+    # many_eyes_proxy: monthly PR count (for panel); transparency_index is repo-level
     panel["many_eyes_proxy"] = panel["pr_count"].fillna(0)
+    panel = panel.merge(transparency_df[["repo_full_name", "transparency_index", "contributor_count"]],
+                        on="repo_full_name", how="left")
 
-    # Interaction
+    # Interaction terms
     panel["many_eyes_x_governance"] = panel["many_eyes_proxy"] * panel["governance_index"].fillna(0)
+    panel["transparency_x_governance"] = panel["transparency_index"].fillna(0) * panel["governance_index"].fillna(0)
 
-    # Write datasets
+    # --- Load OSV and link to repos via pypi_repo_master ---
+    osv_path = f"{outdir}/osv_vulns_raw.{ 'parquet' if fmt=='parquet' else 'csv'}"
+    pypi_path = f"{outdir}/pypi_repo_master.{ 'parquet' if fmt=='parquet' else 'csv'}"
+    vuln_quarter = pd.DataFrame()
+    vuln_repo_level = pd.DataFrame()
+
+    if os.path.exists(osv_path) and os.path.exists(pypi_path):
+        osv = pd.read_parquet(osv_path) if fmt == "parquet" else pd.read_csv(osv_path)
+        pypi = pd.read_parquet(pypi_path) if fmt == "parquet" else pd.read_csv(pypi_path)
+
+        # Map package_name -> repo_full_name
+        pypi["repo_full_name"] = pypi["github_url"].str.replace("https://github.com/", "", regex=False)
+        pkg_to_repo = pypi[["package_name", "repo_full_name"]].drop_duplicates("package_name")
+        osv = osv.merge(pkg_to_repo, on="package_name", how="left")
+        osv = osv.dropna(subset=["repo_full_name"])
+
+        # Classify severity
+        osv["severity_class"] = osv["severity_raw"].apply(parse_cvss_severity)
+
+        # Quarterly vulnerability counts per repo
+        osv["quarter"] = osv["published"].apply(lambda x: quarter_bucket(x) if pd.notna(x) else None)
+        osv = osv.dropna(subset=["quarter"])
+
+        vuln_quarter = osv.groupby(["repo_full_name", "quarter", "severity_class"]).size().reset_index(name="vuln_count")
+        # Pivot: one row per repo-quarter, columns for each severity level
+        vuln_quarter_wide = vuln_quarter.pivot_table(
+            index=["repo_full_name", "quarter"],
+            columns="severity_class",
+            values="vuln_count",
+            fill_value=0
+        ).reset_index()
+        vuln_quarter_wide.columns.name = None
+        for sev in ["critical", "high", "medium", "low", "unknown"]:
+            if sev not in vuln_quarter_wide.columns:
+                vuln_quarter_wide[sev] = 0
+        vuln_quarter_wide["vuln_total"] = (
+            vuln_quarter_wide["critical"] + vuln_quarter_wide["high"] +
+            vuln_quarter_wide["medium"] + vuln_quarter_wide["low"] +
+            vuln_quarter_wide["unknown"]
+        )
+        vuln_quarter_wide["vuln_severe"] = vuln_quarter_wide["critical"] + vuln_quarter_wide["high"]
+
+        write_df(vuln_quarter_wide, f"{outdir}/dataset_vuln_quarterly.{ 'csv' if fmt=='csv' else 'parquet'}", fmt=fmt)
+        print(f"  Quarterly vulnerability dataset: {len(vuln_quarter_wide)} rows")
+
+        # Repo-level vulnerability summary
+        vuln_repo_level = osv.groupby("repo_full_name").agg(
+            vuln_total=("osv_id", "count"),
+            vuln_critical=("severity_class", lambda x: (x == "critical").sum()),
+            vuln_high=("severity_class", lambda x: (x == "high").sum()),
+            vuln_medium=("severity_class", lambda x: (x == "medium").sum()),
+            vuln_low=("severity_class", lambda x: (x == "low").sum()),
+        ).reset_index()
+        vuln_repo_level["vuln_severe"] = vuln_repo_level["vuln_critical"] + vuln_repo_level["vuln_high"]
+        vuln_repo_level["has_severe_vuln"] = (vuln_repo_level["vuln_severe"] > 0).astype(int)
+
+    # --- Write panel dataset ---
     write_df(panel, f"{outdir}/dataset_repo_month_panel.{ 'csv' if fmt=='csv' else 'parquet'}", fmt=fmt)
 
-    # Dataset 4: repo-level bus factor + risk target placeholder (built after OSV processing)
+    # --- Dataset 4: repo-level bus factor + vulnerability risk ---
     repo_level = repo_meta[["repo_full_name","stars","forks","language","created_at"]].merge(bus, on="repo_full_name", how="left")
     repo_level = repo_level.merge(score[["repo_full_name","scorecard_score"]], on="repo_full_name", how="left")
     repo_level = repo_level.merge(gov[["repo_full_name", "governance_artifact_score"]], on="repo_full_name", how="left")
     repo_level = repo_level.merge(gov_merge[["repo_full_name", "governance_index"]], on="repo_full_name", how="left")
     repo_level = repo_level.merge(ext_df[["repo_full_name", "external_contributor_ratio"]], on="repo_full_name", how="left")
+    repo_level = repo_level.merge(transparency_df[["repo_full_name", "transparency_index", "contributor_count"]],
+                                   on="repo_full_name", how="left")
+
+    # Merge vulnerability counts onto repo-level
+    if len(vuln_repo_level) > 0:
+        repo_level = repo_level.merge(vuln_repo_level, on="repo_full_name", how="left")
+        for col in ["vuln_total", "vuln_critical", "vuln_high", "vuln_medium", "vuln_low", "vuln_severe", "has_severe_vuln"]:
+            repo_level[col] = repo_level[col].fillna(0).astype(int)
+
+    # Log-transformed stars for controls
+    repo_level["log_stars"] = np.log1p(repo_level["stars"].fillna(0))
+
     write_df(repo_level, f"{outdir}/dataset_repo_level_busfactor.{ 'csv' if fmt=='csv' else 'parquet'}", fmt=fmt)
 
     print("Datasets built: dataset_repo_month_panel, dataset_repo_level_busfactor")
