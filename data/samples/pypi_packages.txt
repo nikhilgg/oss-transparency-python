@@ -1,22 +1,305 @@
-# Top PyPI packages - reduced set for feasible collection (20 packages)
-# Covers: web frameworks, data science, utilities, security, DevOps
+# Top PyPI packages - curated list for OSS transparency research (~260 packages)
+# Covers: web frameworks, data science, utilities, security, DevOps, CLI, async, testing
+#
+# Web frameworks & HTTP
 requests
 flask
 django
 fastapi
+httpx
+aiohttp
+tornado
+bottle
+starlette
+uvicorn
+gunicorn
+werkzeug
+sanic
+falcon
+quart
+# REST / API
+djangorestframework
+flask-restful
+graphene
+strawberry-graphql
+# Data science & ML
 pandas
 numpy
+scipy
 scikit-learn
-pytest
-black
-pydantic
-celery
-redis
-cryptography
+matplotlib
+seaborn
+statsmodels
+xgboost
+lightgbm
+catboost
+tensorflow
+pytorch-lightning
+transformers
+tokenizers
+datasets
+accelerate
+safetensors
+huggingface-hub
+keras
+theano-pymc
+jax
+optax
+flax
+polars
+dask
+vaex
+modin
+# Jupyter / notebooks
+jupyter
+notebook
+jupyterlab
+ipython
+ipykernel
+nbconvert
+nbformat
+ipywidgets
+# Image / media
 pillow
+opencv-python
+imageio
+scikit-image
+# NLP
+nltk
+spacy
+gensim
+textblob
+# Databases & ORMs
 sqlalchemy
-httpx
+psycopg2-binary
+pymongo
+redis
+celery
+alembic
+databases
+asyncpg
+aiomysql
+peewee
+tortoise-orm
+motor
+# Testing
+pytest
+pytest-cov
+pytest-asyncio
+pytest-mock
+pytest-xdist
+coverage
+hypothesis
+tox
+nox
+faker
+factory-boy
+responses
+vcrpy
+# Code quality & formatting
+black
+ruff
+flake8
+pylint
+mypy
+pyright
+isort
+autopep8
+bandit
+pre-commit
+# CLI & terminal
 click
 rich
 tqdm
+typer
+argparse
+fire
+prompt-toolkit
+colorama
+blessed
+# Async & concurrency
+asyncio
+anyio
+trio
+uvloop
+gevent
+greenlet
+# Serialization & data
+pydantic
+marshmallow
+attrs
+cattrs
+msgpack
+orjson
+ujson
+pyyaml
+toml
+tomli
+tomli-w
+python-dotenv
+configparser
+jsonschema
+# Cryptography & security
+cryptography
+pyjwt
+paramiko
+bcrypt
+passlib
+certifi
+truststore
+pyopenssl
+# Cloud & infrastructure
+boto3
+botocore
+google-cloud-storage
+google-auth
+azure-storage-blob
+azure-identity
+# DevOps & deployment
+docker
+fabric
+invoke
+ansible-core
+# HTTP / networking
+urllib3
+certifi
+chardet
+idna
+websockets
+grpcio
+protobuf
+# Templating & rendering
+jinja2
+mako
+markupsafe
+# Parsing & scraping
 beautifulsoup4
+lxml
+html5lib
+cssselect
+parsel
+scrapy
+# Task queues & messaging
+kombu
+amqp
+pika
+# Date & time
+python-dateutil
+arrow
+pendulum
+babel
+pytz
+# Math & science
+sympy
+networkx
+igraph
+# Logging & monitoring
+structlog
+loguru
+sentry-sdk
+prometheus-client
+opentelemetry-api
+opentelemetry-sdk
+# File & path utilities
+pathlib2
+watchdog
+filelock
+platformdirs
+appdirs
+importlib-metadata
+importlib-resources
+packaging
+setuptools
+wheel
+pip
+build
+twine
+flit-core
+hatchling
+poetry-core
+# Type stubs & typing
+typing-extensions
+types-requests
+types-pyyaml
+# Documentation
+sphinx
+mkdocs
+mkdocs-material
+pdoc
+# GraphQL
+gql
+ariadne
+# Compression & encoding
+zstandard
+brotli
+chardet
+charset-normalizer
+# Process & system
+psutil
+multiprocess
+joblib
+cloudpickle
+dill
+tblib
+# Retry & resilience
+tenacity
+backoff
+stamina
+# Caching
+cachetools
+diskcache
+dogpile-cache
+# Rate limiting
+ratelimit
+limits
+# Validation
+cerberus
+voluptuous
+# Email
+sendgrid
+mailgun
+# Payment
+stripe
+# Auth
+authlib
+oauthlib
+python-jose
+# Feature flags
+launchdarkly-server-sdk
+# Search
+elasticsearch
+opensearch-py
+# PDF
+reportlab
+pypdf
+pdfplumber
+# Excel
+openpyxl
+xlsxwriter
+# CSV / data
+csvkit
+tablib
+# Geo
+shapely
+geopandas
+folium
+# Image generation
+cairosvg
+# Profiling
+py-spy
+scalene
+memray
+# Plugin systems
+pluggy
+stevedore
+# Event systems
+blinker
+# Context
+contextvars
+# Collections
+sortedcontainers
+bidict
+more-itertools
+toolz
+boltons
+funcy
