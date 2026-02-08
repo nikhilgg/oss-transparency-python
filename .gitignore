@@ -201,6 +201,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Pipeline transient files
+outputs/tables/github_checkpoint.jsonl
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
