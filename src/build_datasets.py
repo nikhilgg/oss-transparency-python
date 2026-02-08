@@ -74,9 +74,26 @@ def main():
     bus = pd.DataFrame(bf_rows)
 
     # --- Build repo_month panel (Dataset 1 & 5 base) ---
-    panel = pd.merge(latency, bug_month, on=["repo_full_name", "month"], how="outer")
-    panel = pd.merge(panel, repo_meta[["repo_full_name","stars","forks","language","created_at"]], on="repo_full_name", how="left")
-    panel = pd.merge(panel, score[["repo_full_name","scorecard_score"]], on="repo_full_name", how="left")
+    # Use all repos as the base: cross-join repo_meta with all observed months
+    activity = pd.merge(latency, bug_month, on=["repo_full_name", "month"], how="outer")
+    all_months = sorted(activity["month"].dropna().unique())
+    if not all_months:
+        all_months = [month_bucket(repo_meta["created_at"].dropna().iloc[0])] if len(repo_meta) else []
+
+    # Create base grid: every repo x every month
+    valid_repos = repo_meta[repo_meta["stars"].notna()]["repo_full_name"].unique()
+    base = pd.DataFrame(
+        [(r, m) for r in valid_repos for m in all_months],
+        columns=["repo_full_name", "month"]
+    )
+    # Merge activity onto the base grid
+    panel = base.merge(activity, on=["repo_full_name", "month"], how="left")
+    panel = panel.merge(repo_meta[["repo_full_name","stars","forks","language","created_at"]], on="repo_full_name", how="left")
+    panel = panel.merge(score[["repo_full_name","scorecard_score"]], on="repo_full_name", how="left")
+
+    # Fill missing activity with 0 (no PRs/bugs that month = 0 count)
+    panel["pr_count"] = panel["pr_count"].fillna(0).astype(int)
+    panel["bug_issue_rate"] = panel["bug_issue_rate"].fillna(0).astype(int)
 
     # project age in days at month start (approx)
     panel["repo_created_at"] = pd.to_datetime(panel["created_at"], errors="coerce", utc=True)

@@ -142,13 +142,12 @@ def extract_repo_meta(repo_data: Dict[str, Any], repo_full_name: str) -> Dict[st
     }
 
 
-def extract_pull_requests(repo_data: Dict[str, Any], repo_full_name: str, since_iso: str) -> List[Dict[str, Any]]:
+def extract_pull_requests(repo_data: Dict[str, Any], repo_full_name: str) -> List[Dict[str, Any]]:
+    """Extract PRs from GraphQL response. No date filter — GraphQL already returns last 100."""
     pr_nodes = (repo_data.get("pullRequests") or {}).get("nodes") or []
     rows = []
     for pr in pr_nodes:
         created = pr.get("createdAt")
-        if created and created < since_iso:
-            continue
         reviews = (pr.get("reviews") or {}).get("nodes") or []
         first_review_at = reviews[0].get("createdAt") if reviews else None
         review_count = len(reviews)
@@ -165,13 +164,12 @@ def extract_pull_requests(repo_data: Dict[str, Any], repo_full_name: str, since_
     return rows
 
 
-def extract_bug_issues(repo_data: Dict[str, Any], repo_full_name: str, since_iso: str) -> List[Dict[str, Any]]:
+def extract_bug_issues(repo_data: Dict[str, Any], repo_full_name: str) -> List[Dict[str, Any]]:
+    """Extract bug issues from GraphQL response. No date filter — GraphQL already returns last 100."""
     issue_nodes = (repo_data.get("bugIssues") or {}).get("nodes") or []
     rows = []
     for it in issue_nodes:
         created = it.get("createdAt")
-        if created and created < since_iso:
-            continue
         closed = it.get("closedAt")
         mttr_days = None
         if created and closed:
@@ -244,8 +242,8 @@ def collect_one_repo(repo: str, since_iso: str, checkpoint_path: str,
         return None
 
     meta = extract_repo_meta(repo_data, repo)
-    prs = extract_pull_requests(repo_data, repo, since_iso)
-    bugs = extract_bug_issues(repo_data, repo, since_iso)
+    prs = extract_pull_requests(repo_data, repo)
+    bugs = extract_bug_issues(repo_data, repo)
 
     # REST: contributors
     try:
