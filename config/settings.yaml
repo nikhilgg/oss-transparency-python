@@ -2,7 +2,7 @@ ecosystem: pypi
 window_months: 24
 
 sampling:
-  pypi_top_n: 200
+  pypi_top_n: 300
   min_stars: 100
   min_prs_last_12m: 20
 
@@ -12,7 +12,10 @@ outputs:
 
 github:
   api_base: https://api.github.com
+  graphql_url: https://api.github.com/graphql
   per_page: 100
+  max_workers: 3
+  checkpoint_path: outputs/tables/github_checkpoint.jsonl
 
 osv:
   api_base: https://api.osv.dev

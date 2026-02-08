@@ -8,9 +8,12 @@ on:
 jobs:
   extract:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     env:
       GITHUB_TOKEN_PAT: ${{ secrets.GITHUB_TOKEN_PAT }}
-      PYPI_TOP_N: 200
+      GITHUB_TOKEN_PAT_2: ${{ secrets.GITHUB_TOKEN_PAT_2 }}
+      GITHUB_TOKEN_PAT_3: ${{ secrets.GITHUB_TOKEN_PAT_3 }}
+      PYPI_TOP_N: 300
       WINDOW_MONTHS: 24
     steps:
       - name: Checkout
@@ -34,7 +37,8 @@ jobs:
         run: |
           python -m src.pypi_collect
 
-      - name: Collect GitHub data
+      - name: Collect GitHub data (GraphQL + checkpoint)
+        timeout-minutes: 90
         run: |
           python -m src.github_collect
 
@@ -50,6 +54,7 @@ jobs:
           sudo mv scorecard /usr/local/bin/scorecard
 
       - name: Run Scorecard for repos
+        timeout-minutes: 60
         run: |
           python - << 'PY'
           import pandas as pd, os, json, subprocess
@@ -60,7 +65,7 @@ jobs:
           for u in master["github_url"].dropna().unique():
             parts = u.rstrip("/").split("/")
             repos.append(f"https://github.com/{parts[-2]}/{parts[-1]}")
-          repos = list(dict.fromkeys(repos))[:100]  # cap for rate/time; increase later
+          repos = list(dict.fromkeys(repos))[:200]  # increased cap for 260+ packages
           for r in repos:
             fp = os.path.join(outdir, r.split("/")[-2] + "_" + r.split("/")[-1] + ".json")
             cmd = ["scorecard", "--repo", r, "--format", "json"]
@@ -76,6 +81,10 @@ jobs:
       - name: Parse scorecard JSON
         run: |
           python -m src.scorecard_collect
+
+      - name: Check governance artifacts
+        run: |
+          python -m src.governance_check
 
       - name: Build datasets
         run: |
