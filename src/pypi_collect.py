@@ -21,7 +21,12 @@ def extract_github_url(info: Dict[str, Any]) -> Optional[str]:
             continue
         m = GITHUB_RE.search(str(u))
         if m:
-            return m.group(1).rstrip("/")
+            url = m.group(1).rstrip("/")
+            # Skip non-repo URLs like github.com/sponsors/username
+            parts = url.split("/")
+            if len(parts) >= 5 and parts[3] in ("sponsors", "orgs", "settings"):
+                continue
+            return url
     return None
 
 def pypi_json(package: str) -> Dict[str, Any]:
