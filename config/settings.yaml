@@ -7,7 +7,7 @@ sampling:
   min_prs_last_12m: 20
 
 outputs:
-  format: parquet  # parquet or csv
+  format: csv  # parquet or csv
   outdir: outputs/tables
 
 github:
