@@ -127,6 +127,25 @@ def main():
     panel["pr_count"] = panel["pr_count"].fillna(0).astype(int)
     panel["bug_issue_rate"] = panel["bug_issue_rate"].fillna(0).astype(int)
 
+    # --- Handle NaN in latency/MTTR/scorecard for analysis readiness ---
+    # review_latency: 0 for months with no PRs (no review needed)
+    panel["review_latency_p50"] = panel["review_latency_p50"].fillna(0.0)
+    panel["review_latency_p90"] = panel["review_latency_p90"].fillna(0.0)
+
+    # bug_mttr: for months with no bugs, fill 0. For months with bugs but no closures,
+    # impute with repo-level median MTTR (best available estimate)
+    panel["bug_mttr_p50_days"] = panel["bug_mttr_p50_days"].fillna(0.0)
+    repo_median_mttr = panel[panel["bug_mttr_p50_days"] > 0].groupby("repo_full_name")["bug_mttr_p50_days"].median()
+    mask_bug_no_mttr = (panel["bug_issue_rate"] > 0) & (panel["bug_mttr_p50_days"] == 0.0)
+    panel.loc[mask_bug_no_mttr, "bug_mttr_p50_days"] = panel.loc[mask_bug_no_mttr, "repo_full_name"].map(repo_median_mttr)
+    # Any remaining NaN (repos with zero closed bugs ever): fill with global median
+    global_median_mttr = panel[panel["bug_mttr_p50_days"] > 0]["bug_mttr_p50_days"].median()
+    panel["bug_mttr_p50_days"] = panel["bug_mttr_p50_days"].fillna(global_median_mttr).fillna(0.0)
+
+    # scorecard_score: impute missing repos with sample median (16/230 repos)
+    scorecard_median = score["scorecard_score"].median()
+    panel["scorecard_score"] = panel["scorecard_score"].fillna(scorecard_median)
+
     # project age in days at month start (approx)
     panel["repo_created_at"] = pd.to_datetime(panel["created_at"], errors="coerce", utc=True)
     panel["month_start"] = pd.to_datetime(panel["month"] + "-01", utc=True)
@@ -281,10 +300,34 @@ def main():
         for col in ["vuln_total", "vuln_critical", "vuln_high", "vuln_medium", "vuln_low", "vuln_severe", "has_severe_vuln"]:
             repo_level[col] = repo_level[col].fillna(0).astype(int)
 
+    # Impute missing scorecard with sample median (same as panel)
+    repo_level["scorecard_score"] = repo_level["scorecard_score"].fillna(scorecard_median)
+
+    # Recompute governance_index for repos that now have imputed scorecard
+    repo_level["governance_index"] = repo_level["governance_index"].fillna(
+        0.6 * repo_level["scorecard_score"].fillna(0) / 10.0 +
+        0.4 * repo_level["governance_artifact_score"].fillna(0)
+    )
+
     # Log-transformed stars for controls
     repo_level["log_stars"] = np.log1p(repo_level["stars"].fillna(0))
 
     write_df(repo_level, f"{outdir}/dataset_repo_level_busfactor.{ 'csv' if fmt=='csv' else 'parquet'}", fmt=fmt)
+
+    # --- Print NaN summary ---
+    panel_nan = panel.isna().sum()
+    panel_nan = panel_nan[panel_nan > 0]
+    if len(panel_nan):
+        print(f"Panel remaining NaN: {panel_nan.to_dict()}")
+    else:
+        print("Panel: zero NaN values")
+
+    repo_nan = repo_level.isna().sum()
+    repo_nan = repo_nan[repo_nan > 0]
+    if len(repo_nan):
+        print(f"Repo-level remaining NaN: {repo_nan.to_dict()}")
+    else:
+        print("Repo-level: zero NaN values (excl. error rows)")
 
     print("Datasets built: dataset_repo_month_panel, dataset_repo_level_busfactor")
 
